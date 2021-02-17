@@ -43,6 +43,7 @@ MAXDELAY=0.1
 VIDEOBITRATE=242
 
 NBUE=$MINUSERS
+
 until [ $NBUE -gt $MAXUSERS ]; do
 
 	# bash until loop

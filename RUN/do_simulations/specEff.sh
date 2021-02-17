@@ -39,7 +39,7 @@ until [ $NBUE -gt $2 ]; do
 	TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PF_"$NBUE"U"$CELS"C"".sim"
 
 	grep "^RX" $TOTALNAME  | awk '{print $8}'  > tmp
-	/usr/local/home/miturral/LTE-Sim/src/Simulations/TOOLS/./make_cell_spectral_efficiency    tmp   ${time}   ${bandwidth} >> specEff.ods
+	./root/lte-sim/TOOLS/make_cell_spectral_efficiency    tmp   ${time}   ${bandwidth} >> specEff.ods
 	rm tmp
 	 let COUNT=COUNT+1
 	done
@@ -53,7 +53,7 @@ until [ $NBUE -gt $2 ]; do
 	TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_MLWDF_"$NBUE"U"$CELS"C"".sim"
 
 	grep "^RX" $TOTALNAME  | awk '{print $8}'  > tmp
-/usr/local/home/miturral/LTE-Sim/src/Simulations/TOOLS/./make_cell_spectral_efficiency   tmp   ${time}   ${bandwidth} >> specEff.ods
+	./root/lte-sim/TOOLS/make_cell_spectral_efficiency   tmp   ${time}   ${bandwidth} >> specEff.ods
 	rm tmp
 
 	 let COUNT=COUNT+1
@@ -68,7 +68,7 @@ until [ $NBUE -gt $2 ]; do
 	TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_EXPPF_"$NBUE"U"$CELS"C"".sim"
 
 	grep "^RX" $TOTALNAME  | awk '{print $8}'  > tmp
-/usr/local/home/miturral/LTE-Sim/src/Simulations/TOOLS/./make_cell_spectral_efficiency    tmp   ${time}   ${bandwidth} >> specEff.ods
+	./root/lte-sim/TOOLS/make_cell_spectral_efficiency    tmp   ${time}   ${bandwidth} >> specEff.ods
 	rm tmp
 	 let COUNT=COUNT+1
 	done
