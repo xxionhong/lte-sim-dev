@@ -26,3 +26,10 @@
 *.exe
 *.out
 *.app
+
+# simulation data
+
+RUN/do_simulations/*.jpg
+RUN/do_simulations/*.ods
+RUN/do_simulations/*.sim
+RUN/do_simulations/*.temp
