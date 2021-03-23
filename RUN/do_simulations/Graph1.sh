@@ -30,14 +30,14 @@ echo "set grid" >>$filename
 #echo "set boxwidth 0.5 absolute" >> $filename
 echo "set style fill solid 1.0 noborder" >>$filename
 echo "set key inside right" >>$filename
-echo "set xlabel \"$9\"" >>$filename
-echo "set ylabel \"$10\"" >>$filename
+echo "set xlabel \"$10\"" >>$filename
+echo "set ylabel \"$11\"" >>$filename
 
 #echo  "set format y \"%.0t*10^%+03T\"" >> $filename #Pour le PLR
 
-echo "set title \"$8\"" >>$filename
+echo "set title \"$9\"" >>$filename
 #echo "set yrange [ *:* ] noreverse nowriteback" >> $filename
 #echo "set xrange [ *:* ] noreverse nowriteback" >> $filename
-echo "plot  '$2' using 2:xtic(1) title 'PF', '$3' using 2:xtic(1) title 'MLWDF', '$4' using 2:xtic(1) title 'EXP/PF', '$5' using 2:xtic(1) title 'FLS', '$6' using 2:xtic(1) title 'EXPRULE', '$7' using 2:xtic(1) title 'LOGRULE'" >>$filename
+echo "plot  '$2' using 2:xtic(1) title 'PF', '$3' using 2:xtic(1) title 'MLWDF', '$4' using 2:xtic(1) title 'EXP/PF', '$5' using 2:xtic(1) title 'FLS', '$6' using 2:xtic(1) title 'EXPRULE', '$7' using 2:xtic(1) title 'LOGRULE', '$8' using 2:xtic(1) title 'PROPOSED'" >>$filename
 gnuplot $filename
 rm -Rf $filename

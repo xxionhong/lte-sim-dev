@@ -19,24 +19,27 @@
  * Author: Giuseppe Piro <g.piro@poliba.it>
  */
 
-#ifndef EXP_RULE_DOWNLINK_PACKET_SCHEDULER_H_
-#define EXP_RULE_DOWNLINK_PACKET_SCHEDULER_H_
+#ifndef PROPOSED_DOWNLINK_PACKET_SCHEDULER_H_
+#define PROPOSED_DOWNLINK_PACKET_SCHEDULER_H_
 
 #include "downlink-packet-scheduler.h"
 
-class ExpRuleDownlinkPacketScheduler : public DownlinkPacketScheduler
+class PROPOSEDDownlinkPacketScheduler : public DownlinkPacketScheduler
 {
 public:
-	ExpRuleDownlinkPacketScheduler();
-	virtual ~ExpRuleDownlinkPacketScheduler();
+	PROPOSEDDownlinkPacketScheduler();
+	virtual ~PROPOSEDDownlinkPacketScheduler();
 
 	virtual void DoSchedule(void);
-
+	virtual void RBsAllocation ();
 	void ComputeAverageOfHOLDelays(void);
 	virtual double ComputeSchedulingMetric(RadioBearer *bearer, double spectralEfficiency, int subChannel);
-
+	virtual void DoStopSchedule(void);
+	void ComputeFairindex();
+	
 private:
 	double m_avgHOLDelayes;
+	double fairindex;
 };
 
-#endif /* EXP_RULE_DOWNLINK_PACKET_SCHEDULER_H_ */
+#endif /* PROPOSED_DOWNLINK_PACKET_SCHEDULER_H_ */

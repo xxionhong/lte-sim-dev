@@ -117,6 +117,20 @@ until [ $NBUE -gt $2 ]; do
 	echo AVERAGE >>specEff.ods
 	echo >>specEff.ods
 	echo >>specEff.ods
+	#----------------------------------------------#
+	echo LOGRULE >>specEff.ods
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PROPOSED_"$NBUE"U"$CELS"C"".sim"
+
+		grep "^RX" $TOTALNAME | awk '{print $8}' >tmp
+		./root/lte-sim/TOOLS/make_cell_spectral_efficiency tmp ${time} ${bandwidth} >>specEff.ods
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+	echo AVERAGE >>specEff.ods
+	echo >>specEff.ods
+	echo >>specEff.ods
 
 	let NBUE=NBUE+$3
 done

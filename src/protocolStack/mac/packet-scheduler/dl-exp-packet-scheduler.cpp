@@ -19,7 +19,6 @@
  * Author: Giuseppe Piro <g.piro@poliba.it>
  */
 
-
 #include "dl-exp-packet-scheduler.h"
 #include "../mac-entity.h"
 #include "../../packet/Packet.h"
@@ -37,42 +36,42 @@
 
 DL_EXP_PacketScheduler::DL_EXP_PacketScheduler()
 {
-  SetMacEntity (0);
-  CreateFlowsToSchedule ();
+	SetMacEntity(0);
+	CreateFlowsToSchedule();
 }
 
 DL_EXP_PacketScheduler::~DL_EXP_PacketScheduler()
 {
-  Destroy ();
+	Destroy();
 }
 
-void
-DL_EXP_PacketScheduler::DoSchedule ()
+void DL_EXP_PacketScheduler::DoSchedule()
 {
 #ifdef SCHEDULER_DEBUG
 	std::cout << "Start DL packet scheduler for node "
-			<< GetMacEntity ()->GetDevice ()->GetIDNetworkNode()<< std::endl;
+			  << GetMacEntity()->GetDevice()->GetIDNetworkNode() << std::endl;
 #endif
 
-  UpdateAverageTransmissionRate ();
-  CheckForDLDropPackets ();
-  SelectFlowsToSchedule ();
-  ComputeAW ();
+	UpdateAverageTransmissionRate();
+	CheckForDLDropPackets();
+	SelectFlowsToSchedule();
+	ComputeAW();
 
-  if (GetFlowsToSchedule ()->size() == 0)
-	{}
-  else
+	if (GetFlowsToSchedule()->size() == 0)
 	{
-	  RBsAllocation ();
+	}
+	else
+	{
+		RBsAllocation();
 	}
 
-  StopSchedule ();
+	StopSchedule();
 }
 
 double
-DL_EXP_PacketScheduler::ComputeSchedulingMetric (RadioBearer *bearer, double spectralEfficiency, int subChannel)
+DL_EXP_PacketScheduler::ComputeSchedulingMetric(RadioBearer *bearer, double spectralEfficiency, int subChannel)
 {
-  /*
+	/*
    * For the EXP scheduler the metric is computed
    * as follows:
    *                -log(dropProbability)/targetDelay * HOL - aW
@@ -80,90 +79,82 @@ DL_EXP_PacketScheduler::ComputeSchedulingMetric (RadioBearer *bearer, double spe
    *                            1 - sqrt (aW)
    */
 
-  double metric;
+	double metric;
 
-  if ((bearer->GetApplication ()->GetApplicationType () == Application::APPLICATION_TYPE_INFINITE_BUFFER)
-	  ||
-	  (bearer->GetApplication ()->GetApplicationType () == Application::APPLICATION_TYPE_CBR))
-    {
-	  metric = (spectralEfficiency * 180000.)
-				/
-	    	    bearer->GetAverageTransmissionRate();
-    }
-  else
-    {
+	if ((bearer->GetApplication()->GetApplicationType() == Application::APPLICATION_TYPE_INFINITE_BUFFER) ||
+		(bearer->GetApplication()->GetApplicationType() == Application::APPLICATION_TYPE_CBR))
+	{
+		metric = (spectralEfficiency * 180000.) /
+				 bearer->GetAverageTransmissionRate();
+	}
+	else
+	{
 
-     QoSForEXP *qos = (QoSForEXP*) bearer->GetQoSParameters ();
+		QoSForEXP *qos = (QoSForEXP *)bearer->GetQoSParameters();
 
-	 double HOL = bearer->GetHeadOfLinePacketDelay ();
-     double alfa = -log10(qos->GetDropProbability()) / qos->GetMaxDelay ();
-     double avgAW = GetAW ();
-	 double AW = alfa * HOL;
+		double HOL = bearer->GetHeadOfLinePacketDelay();
+		double alfa = -log10(qos->GetDropProbability()) / qos->GetMaxDelay();
+		double avgAW = GetAW();
+		double AW = alfa * HOL;
 
-	  if (AW < 0.000001)
-		  AW=0;
+		if (AW < 0.000001)
+			AW = 0;
 
-	  double AW_avgAW = AW - avgAW;
+		double AW_avgAW = AW - avgAW;
 
-	  if (AW_avgAW < 0.000001)
-		  AW_avgAW=0;
+		if (AW_avgAW < 0.000001)
+			AW_avgAW = 0;
 
-	  metric = exp ( AW_avgAW /
-					 (1 + sqrt (GetAW ())) )
-	               *
-	               ((spectralEfficiency * 180000.)
-	               /
-	               bearer->GetAverageTransmissionRate());
-    }
+		metric = exp(AW_avgAW /
+					 (1 + sqrt(GetAW()))) *
+				 ((spectralEfficiency * 180000.) /
+				  bearer->GetAverageTransmissionRate());
+	}
 
-  return metric;
+	return metric;
 }
 
-
-void
-DL_EXP_PacketScheduler::ComputeAW ()
+void DL_EXP_PacketScheduler::ComputeAW()
 {
-  FlowsToSchedule *flowsToSchedule = GetFlowsToSchedule ();
-  FlowsToSchedule::iterator iter;
-  FlowToSchedule *flow;
+	FlowsToSchedule *flowsToSchedule = GetFlowsToSchedule();
+	FlowsToSchedule::iterator iter;
+	FlowToSchedule *flow;
 
 #ifdef SCHEDULER_DEBUG
-  std::cout << "ComputeAW" << std::endl;
+	std::cout << "ComputeAW" << std::endl;
 #endif
 
-  m_aW = 0;
-  int nbFlow = 0;
-  for (iter = flowsToSchedule->begin(); iter != flowsToSchedule->end(); iter++)
-    {
-	  flow = *iter;
-	  RadioBearer *bearer = flow->GetBearer ();
+	m_aW = 0;
+	int nbFlow = 0;
+	for (iter = flowsToSchedule->begin(); iter != flowsToSchedule->end(); iter++)
+	{
+		flow = *iter;
+		RadioBearer *bearer = flow->GetBearer();
 
-	  if (bearer->HasPackets ())
-	    {
-		  if ((bearer->GetApplication ()->GetApplicationType () == Application::APPLICATION_TYPE_TRACE_BASED)
-			  ||
-			  (bearer->GetApplication ()->GetApplicationType () == Application::APPLICATION_TYPE_VOIP))
+		if (bearer->HasPackets())
+		{
+			if ((bearer->GetApplication()->GetApplicationType() == Application::APPLICATION_TYPE_TRACE_BASED) ||
+				(bearer->GetApplication()->GetApplicationType() == Application::APPLICATION_TYPE_VOIP))
 			{
-			  QoSForEXP *qos = (QoSForEXP*) bearer->GetQoSParameters ();
-			  double aWi =  - (log10 (qos->GetDropProbability())
-							  /
-							  qos->GetMaxDelay ());
-			  double HOL = bearer->GetHeadOfLinePacketDelay ();
-			  aWi = aWi * HOL;
-			  m_aW += aWi;
-			  nbFlow++;
+				QoSForEXP *qos = (QoSForEXP *)bearer->GetQoSParameters();
+				double aWi = -(log10(qos->GetDropProbability()) /
+							   qos->GetMaxDelay());
+				double HOL = bearer->GetHeadOfLinePacketDelay();
+				aWi = aWi * HOL;
+				m_aW += aWi;
+				nbFlow++;
 			}
-	    }
-    }
+		}
+	}
 
-  m_aW = m_aW/nbFlow;
+	m_aW = m_aW / nbFlow;
 
-  if (m_aW < 0.000001)
-	  m_aW=0;
+	if (m_aW < 0.000001)
+		m_aW = 0;
 }
 
 double
-DL_EXP_PacketScheduler::GetAW (void) const
+DL_EXP_PacketScheduler::GetAW(void) const
 {
-  return m_aW;
+	return m_aW;
 }

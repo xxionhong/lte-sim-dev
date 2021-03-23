@@ -23,9 +23,9 @@ FILENAME="Multi" # SIMULATION TYPE NAME
 COUNT=1
 CELS=1 # NUMBER OF CELLS
 TOTALNAME=""
-MINUSERS=10 # Start users
-INTERVAL=20 # Interval between users
-MAXUSERS=50 #max of users
+MINUSERS=0 # Start users
+INTERVAL=2 # Interval between users
+MAXUSERS=10 #max of users
 
 # params of LTE-SIM MULTICEL
 
@@ -93,6 +93,15 @@ until [ $NBUE -gt $MAXUSERS ]; do
 		let COUNT=COUNT+1
 	done
 	COUNT=1
+
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PROPOSED_"$NBUE"U"$CELS"C"".sim"
+		../../LTE-Sim SingleCellWithI $CELS $RADIUS $NBUE $NBVOIP $NBVIDEO $NBBE $NBCBR 7 $FRAME_STRUCT $SPEED $MAXDELAY $VIDEOBITRATE $COUNT >$TOTALNAME
+		echo FILE $TOTALNAME CREATED!
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+
 	let NBUE=NBUE+INTERVAL
 done
 echo SIMULATION FINISHED!

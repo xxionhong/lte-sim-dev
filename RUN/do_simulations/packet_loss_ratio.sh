@@ -111,6 +111,18 @@ until [ $NBUE -gt $2 ]; do
 	COUNT=1
 	rm temporal
 
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PROPOSED_"$NBUE"U"$CELS"C"".sim"
+		grep "RX "$7 $TOTALNAME | awk '{print $1}' >tmp
+		grep "TX "$7 $TOTALNAME | awk '{print $1}' >>tmp
+		./compute_plr.sh tmp >>temporal
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	./compute_average.sh temporal | awk '{print "'$NBUE' "$1}' >>PROPOSED_Y1_$8_$7.dat
+	COUNT=1
+	rm temporal
+
 	let NBUE=NBUE+$3
 done
 
@@ -138,7 +150,11 @@ echo LOGRULE >>results_$8_$7.ods
 echo Users Value >>results_$8_$7.ods
 grep " " LOGRULE_Y1_$8_$7.dat >>results_$8_$7.ods
 
-./Graph1.sh $7_$8 PF_Y1_$8_$7.dat MLWDF_Y1_$8_$7.dat EXPPF_Y1_$8_$7.dat FLS_Y1_$8_$7.dat EXPRULE_Y1_$8_$7.dat LOGRULE_Y1_$8_$7.dat $7-Packet-Loss-Ratio Users PLR
+echo PROPOSED >>results_$8_$7.ods
+echo Users Value >>results_$8_$7.ods
+grep " " PROPOSED_Y1_$8_$7.dat >>results_$8_$7.ods
+
+./Graph1.sh $7_$8 PF_Y1_$8_$7.dat MLWDF_Y1_$8_$7.dat EXPPF_Y1_$8_$7.dat FLS_Y1_$8_$7.dat EXPRULE_Y1_$8_$7.dat LOGRULE_Y1_$8_$7.dat PROPOSED_Y1_$8_$7.dat $7-Packet-Loss-Ratio Users PLR
 
 rm PF_Y1_$8_$7.dat
 rm MLWDF_Y1_$8_$7.dat
@@ -146,5 +162,6 @@ rm EXPPF_Y1_$8_$7.dat
 rm FLS_Y1_$8_$7.dat
 rm EXPRULE_Y1_$8_$7.dat
 rm LOGRULE_Y1_$8_$7.dat
+rm PROPOSED_Y1_$8_$7.dat
 
 echo PLR REPORT FINISHED!!

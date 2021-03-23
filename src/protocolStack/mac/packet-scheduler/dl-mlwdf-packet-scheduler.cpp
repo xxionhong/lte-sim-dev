@@ -129,4 +129,3 @@ DL_MLWDF_PacketScheduler::ComputeSchedulingMetric (RadioBearer *bearer, double s
 
   return metric;
 }
-
