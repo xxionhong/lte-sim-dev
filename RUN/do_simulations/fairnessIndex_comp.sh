@@ -157,6 +157,7 @@ until [ $NBUE -gt $2 ]; do
 	COUNT=1
 	rm temporal
 	rm temporal2
+	
 	#START ANOTHER ALGORITHM
 	#
 	#-----> Add code here

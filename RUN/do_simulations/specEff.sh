@@ -118,7 +118,7 @@ until [ $NBUE -gt $2 ]; do
 	echo >>specEff.ods
 	echo >>specEff.ods
 	#----------------------------------------------#
-	echo LOGRULE >>specEff.ods
+	echo PROPOSED >>specEff.ods
 	until [ $COUNT -gt $NUMSIM ]; do
 		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PROPOSED_"$NBUE"U"$CELS"C"".sim"
 

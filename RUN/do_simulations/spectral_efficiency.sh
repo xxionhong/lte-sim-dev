@@ -79,6 +79,67 @@ until [ $NBUE -gt $2 ]; do
 	echo AVERAGE >>Spectral_efficiency.ods
 	echo >>Spectral_efficiency.ods
 	echo >>Spectral_efficiency.ods
+
+	echo FLS >>Spectral_efficiency.ods
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_FLS_"$NBUE"U"$CELS"C"".sim"
+
+		grep -i "^RX" $TOTALNAME | grep -iv "AM_RLC" | awk '{print $8+5}' >tmp
+		grep -i "^RX" $TOTALNAME | grep -i "AM_RLC" | awk '{print $4+5}' >>tmp
+		./compute_spectral_efficiency.sh tmp >>Spectral_efficiency.ods
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+	echo AVERAGE >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+
+	echo EXPRULE >>Spectral_efficiency.ods
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_EXPRULE_"$NBUE"U"$CELS"C"".sim"
+
+		grep -i "^RX" $TOTALNAME | grep -iv "AM_RLC" | awk '{print $8+5}' >tmp
+		grep -i "^RX" $TOTALNAME | grep -i "AM_RLC" | awk '{print $4+5}' >>tmp
+		./compute_spectral_efficiency.sh tmp >>Spectral_efficiency.ods
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+	echo AVERAGE >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+
+	echo LOGRULE >>Spectral_efficiency.ods
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_LOGRULE_"$NBUE"U"$CELS"C"".sim"
+
+		grep -i "^RX" $TOTALNAME | grep -iv "AM_RLC" | awk '{print $8+5}' >tmp
+		grep -i "^RX" $TOTALNAME | grep -i "AM_RLC" | awk '{print $4+5}' >>tmp
+		./compute_spectral_efficiency.sh tmp >>Spectral_efficiency.ods
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+	echo AVERAGE >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+
+	echo PROPOSED >>Spectral_efficiency.ods
+	until [ $COUNT -gt $NUMSIM ]; do
+		TOTALNAME=$FILE"_"$COUNT"_"$FILENAME"_PROPOSED_"$NBUE"U"$CELS"C"".sim"
+
+		grep -i "^RX" $TOTALNAME | grep -iv "AM_RLC" | awk '{print $8+5}' >tmp
+		grep -i "^RX" $TOTALNAME | grep -i "AM_RLC" | awk '{print $4+5}' >>tmp
+		./compute_spectral_efficiency.sh tmp >>Spectral_efficiency.ods
+		rm tmp
+		let COUNT=COUNT+1
+	done
+	COUNT=1
+	echo AVERAGE >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+	echo >>Spectral_efficiency.ods
+
 	let NBUE=NBUE+$3
 done
 echo SPECTRAL EFFICIENCY REPORT FINISHED!!
