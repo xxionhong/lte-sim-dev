@@ -1,17 +1,17 @@
 # Copyright (c) 2010
 #
-# This file is part of LTE-Sim
-# LTE-Sim is free software; you can redistribute it and/or modify
+# This file is part of lte-sim-dev
+# lte-sim-dev is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 3 as
 # published by the Free Software Foundation;
 #
-# LTE-Sim is distributed in the hope that it will be useful,
+# lte-sim-dev is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with LTE-Sim; if not, see <http://www.gnu.org/licenses/>.
+# along with lte-sim-dev; if not, see <http://www.gnu.org/licenses/>.
 #
 # Author: Mauricio Iturralde <mauricio.iturralde@irit.fr, mauro@miturralde.com>
 
@@ -40,7 +40,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -58,7 +58,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -76,7 +76,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -94,7 +94,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -112,7 +112,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -130,7 +130,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
@@ -147,7 +147,7 @@ until [ $NBUE -gt $2 ]; do
 			grep "RX "$7 $TOTALNAME | grep "B ${bearer} " | awk '{print $8}' >tmp
 			./compute_throughput.sh tmp >>tmp_2
 		done
-		/root/lte-sim/TOOLS/make_fairness_index tmp_2 >>temporal
+		/root/lte-sim-dev/TOOLS/make_fairness_index tmp_2 >>temporal
 		rm tmp
 		rm tmp_2
 		let COUNT=COUNT+1
