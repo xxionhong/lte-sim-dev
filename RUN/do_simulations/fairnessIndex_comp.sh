@@ -27,7 +27,7 @@ TOTALNAME=""
 NBUE=$1 #Number of UE's
 # variables for values
 
-time=120
+time=25
 
 until [ $NBUE -gt $2 ]; do
 

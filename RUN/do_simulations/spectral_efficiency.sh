@@ -27,8 +27,8 @@ TOTALNAME=""
 NBUE=$1 #Number of UE's
 # variables for values
 
-bandwidth=10000000 # setear en el archivo compute_spectral_efficiency
-time=150           # setear en el archivocompute_spectral_efficiency
+bandwidth=20000000 # setear en el archivo compute_spectral_efficiency
+time=25           # setear en el archivocompute_spectral_efficiency
 
 until [ $NBUE -gt $2 ]; do
 	echo FOR $NBUE USERS >>Spectral_efficiency.ods

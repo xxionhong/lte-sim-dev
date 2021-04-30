@@ -26,7 +26,7 @@ TOTALNAME=""
 NBUE=$1 #Number of UE's
 # variables for values
 
-time=120 # Seteat en el archivo compute_throughput la duracion del flujo.
+time=25 # Seteat en el archivo compute_throughput la duracion del flujo.
 
 until [ $NBUE -gt $2 ]; do
 	# bash until loop

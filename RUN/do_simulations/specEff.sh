@@ -27,8 +27,8 @@ TOTALNAME=""
 NBUE=$1 #Number of UE's
 # variables for values
 
-bandwidth=10000000
-time=150
+bandwidth=20000000
+time=25
 
 until [ $NBUE -gt $2 ]; do
 	echo FOR $NBUE USERS >>specEff.ods

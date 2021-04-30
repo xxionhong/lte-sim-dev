@@ -60,12 +60,12 @@ static void SingleCellWithInterference (int nbCells, double radius,
 {
 
   // define simulation times
-  double duration = 46;
-  double flow_duration = 40;
+  double duration = 30;
+  double flow_duration = 25;
 
 
   int cluster = 4;
-  double bandwidth = 5;
+  double bandwidth = 20;
 
   // CREATE COMPONENT MANAGER
   Simulator *simulator = Simulator::Init();
